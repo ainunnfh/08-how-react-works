@@ -24,12 +24,12 @@ const content = [
 export default function App() {
   return (
     <div>
-      <Tabbed content={content} />
+      <Tabbed content={content} key={content.map((item) => item.id)}/>
     </div>
   );
 }
 
-function Tabbed({ content }) {
+function Tabbed({ content, id }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -42,7 +42,10 @@ function Tabbed({ content }) {
       </div>
 
       {activeTab <= 2 ? (
-        <TabContent item={content.at(activeTab)} key={content.at(activeTab).summary} />
+        <TabContent
+        item={content.at(activeTab)}
+        key={content.at(activeTab).summary}
+      />
       ) : (
         <DifferentContent />
       )}
@@ -74,6 +77,10 @@ function TabContent({ item }) {
     setLikes(0);
   }
 
+  function handleLater(){
+    setTimeout(handleUndo, 2000);
+  }
+
   function handleTripleInc(){
     setLikes((likes) => likes + 1);
     setLikes((likes) => likes + 1);
@@ -99,7 +106,7 @@ function TabContent({ item }) {
 
       <div className="tab-undo">
         <button onClick={handleUndo}>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleLater}>Undo in 2s</button>
       </div>
     </div>
   );
